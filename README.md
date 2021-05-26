@@ -1,10 +1,3 @@
----
-attachments: [Clipboard_2021-05-18-21-03-24.png]
-title: Uma simples documentação de API usando a Especificação OpenAPI
-created: '2021-05-18T19:32:31.555Z'
-modified: '2021-05-19T00:14:20.307Z'
----
-
 # Uma simples documentação de API usando a Especificação OpenAPI
 
 Neste artigo irei explicar como documentar sua API com OpenAPI na versão 3.0.1.
