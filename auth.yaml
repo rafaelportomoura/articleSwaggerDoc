@@ -1,0 +1,141 @@
+openapi: 3.0.1
+info:
+  title: Autentificação
+  description: API para cadastrar brinquedos
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+    description: Servidor local
+tags:
+  - name: Auth
+    description: Rotas de autentificação do usuário
+paths:
+  /auth:
+    post:
+      tags:
+        - Auth
+      summary: Cria usuário no sistema
+      description: Cria usuário no sistema
+      operationId: CreateUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUser'
+        required: true
+      responses:
+        201:
+          description: CREATED
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        400:
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageErrorResponse'
+        401:
+          description: UNAUTHORIZED
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageErrorResponse'
+        404:
+          description: NOT FOUND
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageErrorResponse'
+        409:
+          description: CONFLICTED
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageErrorResponse'
+        500:
+          description: SERVER INTERNAL ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageErrorResponse'
+      x-codegen-request-body-name: body
+  /auth/{email}:
+    delete:
+      tags:
+        - Auth
+      summary: Deleta usuário do sistema
+      description: Deleta usuário do sistema
+      operationId: DeleteUser
+      parameters:
+        - name: email
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageSuccessResponse'
+        400:
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageErrorResponse'
+        401:
+          description: UNAUTHORIZED
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageErrorResponse'
+        404:
+          description: NOT FOUND
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageErrorResponse'
+        500:
+          description: SERVER INTERNAL ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageErrorResponse'
+      security:
+        - Bearer: []
+
+components:
+  schemas:
+    CreateUser:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        name:
+          type: string
+    MessageErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          default: Mensagem de erro
+    MessageSuccessResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          default: Mensagem de sucesso
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header
